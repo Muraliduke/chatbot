@@ -1,0 +1,32 @@
+<mat-card *ngIf="data">
+    <mat-card-content>
+        <div>
+            <img mat-card-image src="https://www.countryflags.io/{{data[0].country_code}}/flat/64.png" alt="{{data[0].location }}">
+            <p>  <b>Find below the Covid details for {{data[0].location }}</b> </p>
+             <div class="content">
+                 <div class="content-1">
+                    <p>Latitude </p>
+                    <p>Longitude</p>
+                    <p>Confirmed </p>
+                    <p>Dead </p>
+                    <p>Recovered</p>
+                    <p>Last Updated </p>
+                 </div>
+
+                 <div class="content-2">
+                    <p>{{data[0].latitude}}</p>
+                    <p>{{data[0].longitude}}</p>
+                    <p>{{data[0].confirmed}}</p>
+                    <p>{{data[0].dead}}</p>
+                    <p>{{data[0].recovered}}</p>
+                    <p>{{data[0].updated.slice(0, 10)}}</p>
+                 </div>
+
+             </div>
+        </div>
+       <!-- <p>{{data}}</p> -->
+    </mat-card-content>
+    <!-- <button mat-stroked-button (click)="sendMessage('can you provide me country wise Covid 19 details?')"  color="primary">View for different country?</button> -->
+    <mat-chip   color="primary" (click)="sendMessage('can you provide me country wise Covid 19 details for different country?')" selected>View for different country?</mat-chip>
+
+</mat-card>

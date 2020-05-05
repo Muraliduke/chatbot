@@ -1,0 +1,19 @@
+
+<!-- <nb-accordion>
+  <nb-accordion-item *ngFor="let val of data">
+   <nb-accordion-item-header>{{val.desc}}</nb-accordion-item-header>
+   <nb-accordion-item-body>
+     {{val.val}}
+   </nb-accordion-item-body>
+  </nb-accordion-item>
+ </nb-accordion> -->
+
+ <mat-card class="card-wrapper">
+   <mat-card-title>Here are the corona/COVID 19 stats you need</mat-card-title>
+    <mat-card class="card-content" *ngFor="let val of data">
+      <mat-card-content>
+        <p><b>{{formatHeading(val.desc)}}</b></p>
+        <p class="count"> <b>{{val.val}}</b></p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card>

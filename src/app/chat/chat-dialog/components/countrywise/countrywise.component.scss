@@ -1,0 +1,23 @@
+img{
+    width: 8vw;
+    margin: 0;
+}
+
+p{
+    font-size: 12px;
+}
+
+
+.content{
+display: flex;
+    align-content: space-between;
+}
+.content-1{
+    p{
+        font-weight: bold;
+    }
+    flex: 1;
+}
+mat-chip{
+    font-size: 11px;
+}

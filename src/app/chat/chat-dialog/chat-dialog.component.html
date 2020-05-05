@@ -1,0 +1,70 @@
+<nb-card status="danger">
+  <nb-card-header>Ng-Covid Bot</nb-card-header>
+  <nb-card-body>
+    <div #scrollMe id="msgContainer" class="wrapper scrollable">
+      <section>
+        <nb-alert status="info" closable  class="alert-change">
+          Hi!! Welcome!  Am an open source digital assistant who is rapidly learning everyday.I 
+          can provide information about covid status.Here are the quick links below if you wish to get started  
+          
+        </nb-alert>
+
+        <mat-chip-list class="chip" aria-label="Fish selection">
+          <mat-chip   *ngFor="let chip of quickInfo; ;let i=index" color={{Mcolor[i%2]}} (click)="sendMessage(chip)" selected>{{chip}}</mat-chip>
+        </mat-chip-list>
+        
+       </section>
+
+     
+
+      <ng-container *ngFor="let msg of message | async" >
+
+        <div class="message" *ngIf="!msg.custom" 
+        [ngClass]="{'from': msg.sentBy === 'bot', 'to': msg.sentBy === 'user'}">
+          <p class="watermark" *ngIf="msg.sentBy === 'bot'">Bot {{msg.timestamp | date:'shortTime'}}</p>
+          <p class="watermark" *ngIf="msg.sentBy === 'user'">You {{msg.timestamp | date:'shortTime'}}</p>  
+          <div *ngIf="msg.action !== 'Corona virus'">
+            <p *ngIf="!msg.action || msg.type=='default'" [ngClass]="{'from-msg': msg.sentBy === 'bot', 'to-msg': msg.sentBy === 'user'}" [innerHtml]="msg.message"></p>
+          </div>
+        </div>
+       
+       
+       <div [ngSwitch]="msg.action">
+           
+          <div *ngSwitchCase="'Corona virus'">
+            <covid 
+              [data]=msg.message
+            ></covid>
+
+          </div> 
+
+          <div *ngSwitchCase="'corona stats'">
+             <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <stats [data]=msg.message.stats></stats>
+          </div>
+          
+          <div *ngSwitchCase="'countryWiseCorona'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <countrywise 
+              [data]=msg.message
+              (viewMore)="sendMessage($event)"
+            ></countrywise>
+          </div>
+          <!-- <div *ngSwitchCase="'Default Fallback Intent'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <p *ngIf="!msg.action" [ngClass]="{'from-msg': msg.sentBy === 'bot', 'to-msg': msg.sentBy === 'user'}">{{msg.message}}</p>
+         </div> -->
+          <!-- <div *ngSwitchCase="contact">...</div> -->
+        </div>
+      </ng-container>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="rm-pad">
+    <div class="form-area">
+      <label for="nameField">Your Message</label>
+      <input type="text" placeholder="Type your message" [(ngModel)]="formval" (keyup.enter)="sendMessage(null)"/>
+      <!-- <button (click)="sendMessage1()">Send</button> -->
+  </div> 
+  <p>Copyright © 2020 by Murali </p>
+  </nb-card-footer>
+</nb-card>

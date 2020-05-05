@@ -1,0 +1,25 @@
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Open Sans, sans-serif;
+    background:black;
+    mat-card-title {
+        font-size: 13px;
+        font-weight: bold;
+        color: white;
+    }
+    .count {
+        color: red;
+    }
+    .card-content {
+        width: 30vw;
+        //   background: black;
+        //   color: white;
+        margin: 5px;
+        font-family: Open Sans, sans-serif;
+    }
+    p {
+        font-size: 12px;
+        // color: white;
+    }
+}
