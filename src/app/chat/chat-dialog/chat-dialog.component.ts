@@ -16,9 +16,10 @@ export class ChatDialogComponent implements OnInit, AfterViewChecked  {
   Mcolor = ['accent', 'primary' ];
   quickInfo: string[] = ['What is corona?',
   'Provide me general covid stats globally',
-  'Need city wise covid details?',
+  // 'Need city wise covid details?',
   'Need Province wise covid details?',
-  'Country wise covid details', 'Travel data'
+  'Country wise covid details', 'Travel restrictions',
+ 'Hospitals in Indian provinces'
   ];
   displayedColumns: string[] = ['desc', 'val'];
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;

@@ -50,6 +50,37 @@
               (viewMore)="sendMessage($event)"
             ></countrywise>
           </div>
+          <div *ngSwitchCase="'coronaTravel'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <travel 
+              [data]=msg.message
+              (viewMore)="sendMessage($event)"
+            ></travel>
+          </div>
+
+          <div *ngSwitchCase="'coronaProvinceWise'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <statewise 
+              [data]=msg.message
+              (viewMore)="sendMessage($event)"
+            ></statewise>
+          </div>
+
+          <div *ngSwitchCase="'Hospitals'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <hospitalsummary 
+              [data]=msg.message
+              (viewMore)="sendMessage($event)"
+            ></hospitalsummary>
+          </div>
+
+          <div *ngSwitchCase="'HospitalProvince'">
+            <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
+            <hospital-province 
+              [data]=msg.message
+              (viewMore)="sendMessage($event)"
+            ></hospital-province>
+          </div>
           <!-- <div *ngSwitchCase="'Default Fallback Intent'">
             <p class="watermark">Bot {{msg.timestamp | date:'shortTime'}}</p>
             <p *ngIf="!msg.action" [ngClass]="{'from-msg': msg.sentBy === 'bot', 'to-msg': msg.sentBy === 'user'}">{{msg.message}}</p>

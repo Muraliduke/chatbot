@@ -1,0 +1,35 @@
+<mat-card *ngIf="data">
+    <mat-card-content>
+        <div>
+             <h4>Find below the Hospital Summary in India</h4>
+             <div class="content">
+                 <div class="content-1">
+                    <p>Rural Hospitals</p>
+                    <p>Rural Beds </p>
+                    <p>Urban Hospitals </p>
+                    <p>Urban Beds</p>
+                    <p>Total Hospitals</p>
+                    <p>Total Beds</p>
+                 </div>
+
+                 <div class="content-2">
+                    <p>{{data.ruralHospitals}}</p>
+                    <p>{{data.ruralBeds}}</p>
+                    <p>{{data.urbanHospitals}}</p>
+                    <p>{{data.urbanBeds}}</p>
+                    <p>{{data.totalHospitals}}</p>
+                    <p>{{data.totalBeds}}</p>
+
+                 </div>
+
+             </div>
+        </div>
+       <!-- <p>{{data}}</p> -->
+    </mat-card-content>
+    <!-- <button mat-stroked-button (click)="sendMessage('can you provide me country wise Covid 19 details?')"  color="primary">View for different country?</button> -->
+    <mat-chip  
+     color="primary" 
+     (click)="sendMessage('I need hospitals info based on state')" 
+     selected>Need state wise information?</mat-chip>
+
+</mat-card>

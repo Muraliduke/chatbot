@@ -1,0 +1,29 @@
+<mat-card *ngIf="data">
+    <mat-card-content>
+        <div>
+             <h4>Find below the Covid details for {{data[0].loc }}</h4>
+             <div class="content">
+                 <div class="content-1">
+                    <p>Confirmed Indian cases </p>
+                    <p>Confirmed Foreign cases </p>
+                    <p>Discharged </p>
+                    <p>Deaths</p>
+                    <p>Total Confirmed Cases</p>
+                 </div>
+
+                 <div class="content-2">
+                    <p>{{data[0].confirmedCasesIndian}}</p>
+                    <p>{{data[0].confirmedCasesForeign}}</p>
+                    <p>{{data[0].discharged}}</p>
+                    <p>{{data[0].deaths}}</p>
+                    <p>{{data[0].totalConfirmed}}</p>
+                 </div>
+
+             </div>
+        </div>
+       <!-- <p>{{data}}</p> -->
+    </mat-card-content>
+    <!-- <button mat-stroked-button (click)="sendMessage('can you provide me country wise Covid 19 details?')"  color="primary">View for different country?</button> -->
+    <mat-chip   color="primary" (click)="sendMessage('different state info for Covid 19')" selected>View for different state?</mat-chip>
+
+</mat-card>

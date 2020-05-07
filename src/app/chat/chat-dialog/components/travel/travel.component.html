@@ -1,0 +1,14 @@
+<mat-card *ngIf="data">
+    <h4 *ngIf="data[0]; else elseBlock">Travel restriction in {{data[0] && data[0].location}}</h4>
+    <ng-template #elseBlock>Could not get the travel data for this country</ng-template>
+    
+    <mat-card-content>
+        <div>
+            <p >{{data[0] && (data[0].data || null)}}</p>
+        </div>
+       <!-- <p>{{data}}</p> -->
+    </mat-card-content>
+    <!-- <button mat-stroked-button (click)="sendMessage('can you provide me country wise Covid 19 details?')"  color="primary">View for different country?</button> -->
+    <mat-chip   color="primary" (click)="sendMessage('travel restrictions for different country')" selected>View for different country?</mat-chip>
+
+</mat-card>

@@ -42,7 +42,46 @@ export class ChatService {
             timestamp: Date.now()};
             this.update(botMessage);
           }
-        } else if ((res.result.action) === 'coronaApi') {
+        } else if ((res.result.metadata.intentName) === 'coronaTravel') {
+          if (res.result.parameters['geo-country']){
+            this.getTravelInfo(res.result.parameters['geo-country'],  res.result.metadata.intentName);
+          }else {
+            const speech = res.result.fulfillment.speech;
+            const botMessage = {message: speech , sentBy: 'bot', type: 'default',
+            timestamp: Date.now()};
+            this.update(botMessage);
+          }
+        }else if ((res.result.metadata.intentName) === 'coronaCityWise') {
+          if (res.result.parameters['geo-city']){
+            // this.getCityInfo(res.result.parameters['geo-city'],  res.result.metadata.intentName);
+          }else {
+            const speech = res.result.fulfillment.speech;
+            const botMessage = {message: speech , sentBy: 'bot', type: 'default',
+            timestamp: Date.now()};
+            this.update(botMessage);
+          }
+        } else if ((res.result.metadata.intentName) === 'coronaProvinceWise') {
+          if (res.result.parameters['geo-state']){
+            this.getProvinceInfo(res.result.parameters['geo-state'],  res.result.metadata.intentName);
+          }else {
+            const speech = res.result.fulfillment.speech;
+            const botMessage = {message: speech , sentBy: 'bot', type: 'default',
+            timestamp: Date.now()};
+            this.update(botMessage);
+          }
+        } else if ((res.result.metadata.intentName) === 'Hospitals') {
+          this.getHospitalsSummary('', res.result.metadata.intentName);
+        }else if ((res.result.metadata.intentName) === 'HospitalProvince') {
+          if (res.result.parameters['geo-state']){
+            this.getHospitalsSummary(res.result.parameters['geo-state'],  res.result.metadata.intentName);
+          }else {
+            const speech = res.result.fulfillment.speech;
+            const botMessage = {message: speech , sentBy: 'bot', type: 'default',
+            timestamp: Date.now()};
+            this.update(botMessage);
+          }
+        }
+        else if ((res.result.action) === 'coronaApi') {
         console.log(res.result.metadata.intentName);
         this.getCoronaStats().subscribe(data => {
           const botMessage = {message: {stats: this.statsFormat(data)} , action: res.result.metadata.intentName,
@@ -71,6 +110,100 @@ export class ChatService {
       this.http.get('https://www.trackcorona.live/api/countries').subscribe( (res: {data: any[], code: number}) => {
       const data = res.data;
       sessionStorage.setItem('covidCountries', JSON.stringify(data));
+      const filterData = data.filter(val => val.location === country);
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+
+      }, err => {this.openSnackBar(); console.log(err)});
+    }
+
+  }
+
+  // getCityInfo(city, action){
+  //   if (sessionStorage.getItem('covidCities')){
+  //     const data = JSON.parse(sessionStorage.getItem('covidCities'));
+  //     const filterData = data.filter(val => val.location === city);
+  //     const botMessage = {message:  filterData, action,
+  //       sentBy: 'bot', custom: true, timestamp: Date.now()};
+  //     this.update(botMessage);
+  //   } else {
+  //     this.http.get('https://www.trackcorona.live/api/countries').subscribe( (res: {data: any[], code: number}) => {
+  //     const data = res.data;
+  //     sessionStorage.setItem('covidCities', JSON.stringify(data));
+  //     const filterData = data.filter(val => val.location === city);
+  //     const botMessage = {message:  filterData, action,
+  //       sentBy: 'bot', custom: true, timestamp: Date.now()};
+  //     this.update(botMessage);
+
+  //     }, err => {this.openSnackBar(); console.log(err)});
+  //   }
+
+  // }
+  getProvinceInfo(province, action){
+    if (sessionStorage.getItem('covidProvinces')){
+      const data = JSON.parse(sessionStorage.getItem('covidProvinces'));
+      const filterData = data.regional.filter(val => val.loc === province);
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+    } else {
+      this.http.get('https://api.rootnet.in/covid19-in/stats/latest').subscribe( (res: {data: 
+      {regional: any[]}, code: number}) => {
+      const data = res.data;
+      sessionStorage.setItem('covidProvinces', JSON.stringify(data));
+      const filterData = data.regional.filter(val => val.loc === province);
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+
+      }, err => {this.openSnackBar(); console.log(err)}); 
+    }
+
+  }
+
+  getHospitalsSummary(state, action){
+    if (sessionStorage.getItem('covidHospitals')){
+      const data = JSON.parse(sessionStorage.getItem('covidHospitals'));
+      let filterData;
+      if(state){
+        filterData = data.regional.filter(val => val.state === state);
+      }else {
+        filterData = data.summary;
+      }
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+    } else {
+      this.http.get('https://api.rootnet.in/covid19-in/hospitals/beds').subscribe( (res: {data: 
+      {regional: any[], summary: any}, code: number}) => {
+      const data = res.data;
+      sessionStorage.setItem('covidHospitals', JSON.stringify(data));
+      let filterData;
+      if(state){
+        filterData = data.regional.filter(val => val.state === state);
+      }else {
+        filterData = data.summary;
+      }
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+
+      }, err => {this.openSnackBar(); console.log(err)}); 
+    }
+  }
+
+  getTravelInfo(country, action){
+    if (sessionStorage.getItem('travelCountries')){
+      const data = JSON.parse(sessionStorage.getItem('travelCountries'));
+      const filterData = data.filter(val => val.location === country);
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
+    } else {
+      this.http.get('https://www.trackcorona.live/api/travel').subscribe( (res: {data: any[], code: number}) => {
+      const data = res.data;
+      sessionStorage.setItem('travelCountries', JSON.stringify(data));
       const filterData = data.filter(val => val.location === country);
       const botMessage = {message:  filterData, action,
         sentBy: 'bot', custom: true, timestamp: Date.now()};

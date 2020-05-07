@@ -14,12 +14,17 @@ import { StatsComponent } from './chat-dialog/components/stats/stats.component';
 import { ContactComponent } from './chat-dialog/components/contact/contact.component';
 import { CovidComponent } from './chat-dialog/components/covid/covid.component';
 import { CountrywiseComponent } from './chat-dialog/components/countrywise/countrywise.component';
+import { StatewiseComponent } from './chat-dialog/components/statewise/statewise.component';
+import { ProvincewiseComponent } from './chat-dialog/components/provincewise/provincewise.component';
+import { TravelComponent } from './chat-dialog/components/travel/travel.component';
+import { HospitalsummaryComponent } from './chat-dialog/components/hospitalsummary/hospitalsummary.component';
+import { HospitalProvinceComponent } from './chat-dialog/components/hospital-province/hospital-province.component';
 
 const NebularModules = [NbChatModule , NbAccordionModule, NbAlertModule, NbCardModule, MatSnackBarModule];
 const AngularMatModules = [MatChipsModule, MatTableModule, MatCardModule];
 
 @NgModule({
-  declarations: [ChatDialogComponent, StatsComponent, ContactComponent, CovidComponent, CountrywiseComponent],
+  declarations: [ChatDialogComponent, StatsComponent, ContactComponent, CovidComponent, CountrywiseComponent, StatewiseComponent, ProvincewiseComponent, TravelComponent, HospitalsummaryComponent, HospitalProvinceComponent],
   imports: [
     CommonModule,
     FormsModule,
