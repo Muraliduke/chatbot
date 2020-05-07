@@ -35,10 +35,7 @@ export class ChatService {
         console.log(res.result.metadata.intentName, res.result)
         if ((res.result.metadata.intentName) === 'countryWiseCorona') {
           if (res.result.parameters['geo-country']){
-            const actionData = this.getCountryInfo(res.result.parameters['geo-country']);
-            const botMessage = {message:  actionData, action: res.result.metadata.intentName,
-          sentBy: 'bot', custom: true, timestamp: Date.now()};
-            this.update(botMessage);
+            this.getCountryInfo(res.result.parameters['geo-country'],  res.result.metadata.intentName);
           }else {
             const speech = res.result.fulfillment.speech;
             const botMessage = {message: speech , sentBy: 'bot', type: 'default',
@@ -63,17 +60,21 @@ export class ChatService {
 
   }
 
-  getCountryInfo(country){
+  getCountryInfo(country, action){
     if (sessionStorage.getItem('covidCountries')){
       const data = JSON.parse(sessionStorage.getItem('covidCountries'));
       const filterData = data.filter(val => val.location === country);
-      return filterData;
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
     } else {
       this.http.get('https://www.trackcorona.live/api/countries').subscribe( (res: {data: any[], code: number}) => {
       const data = res.data;
       sessionStorage.setItem('covidCountries', JSON.stringify(data));
       const filterData = data.filter(val => val.location === country);
-      return filterData;
+      const botMessage = {message:  filterData, action,
+        sentBy: 'bot', custom: true, timestamp: Date.now()};
+      this.update(botMessage);
 
       }, err => {this.openSnackBar(); console.log(err)});
     }

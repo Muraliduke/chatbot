@@ -9,7 +9,7 @@
           
         </nb-alert>
 
-        <mat-chip-list class="chip" aria-label="Fish selection">
+        <mat-chip-list class="chip" aria-label="quickInfo selection">
           <mat-chip   *ngFor="let chip of quickInfo; ;let i=index" color={{Mcolor[i%2]}} (click)="sendMessage(chip)" selected>{{chip}}</mat-chip>
         </mat-chip-list>
         
@@ -23,7 +23,7 @@
         [ngClass]="{'from': msg.sentBy === 'bot', 'to': msg.sentBy === 'user'}">
           <p class="watermark" *ngIf="msg.sentBy === 'bot'">Bot {{msg.timestamp | date:'shortTime'}}</p>
           <p class="watermark" *ngIf="msg.sentBy === 'user'">You {{msg.timestamp | date:'shortTime'}}</p>  
-          <div *ngIf="msg.action !== 'Corona virus'">
+          <div *ngIf="msg.action !== ('Corona virus') || !msg.action">
             <p *ngIf="!msg.action || msg.type=='default'" [ngClass]="{'from-msg': msg.sentBy === 'bot', 'to-msg': msg.sentBy === 'user'}" [innerHtml]="msg.message"></p>
           </div>
         </div>

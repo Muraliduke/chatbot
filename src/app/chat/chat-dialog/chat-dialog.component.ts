@@ -28,15 +28,18 @@ export class ChatDialogComponent implements OnInit, AfterViewChecked  {
 
   ngOnInit(): void {
     this.message = this.chat.conversation.asObservable().pipe(scan((acc, val) => acc.concat(val)));
-    this.message.subscribe(data => console.log(data), err => console.log(err));
+    this.message.subscribe(data => {
+      console.log(data);
+      // this.scrollToBottom();
+    }, err => console.log(err));
     this.scrollToBottom();
   }
 
   sendMessage(val){
-    this.scrollToBottom();
     this.today = Date.now();
     this.chat.converse(val || this.formval);
     this.formval = '';
+    // this.scrollToBottom();
   }
 
   ngAfterViewChecked() {
